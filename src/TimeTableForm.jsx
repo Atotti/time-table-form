@@ -170,6 +170,20 @@ const TimeTableForm = () => {
         const classes = schedule;
         const data = {department, classes};
         console.log("data: ", data);
+        try {
+          const response = await fetch('https://ishiike.herokuapp.com/timetable/schedules/create/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+        } catch (error) {
+          console.error('Error sending schedule:', error);
+        }
       };
 
     const gakubu = [
