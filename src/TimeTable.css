@@ -1,0 +1,51 @@
+/* 基本のスタイリング */
+.TimeTable {
+    margin: 0 auto;
+    max-height: 100vh; /* 高さがビューポートを超えないようにする */
+    overflow: auto; /* 必要に応じてスクロールを可能にする */
+    height: calc(100vh); /* ヘッダーや余白を考慮した高さ */
+  }
+  
+  .TimeTable table {
+    width: 100%; /* 表の幅を親要素に合わせる */
+    height: 100%; /* 表の高さを親要素に合わせる */
+    table-layout: fixed; /* 列幅を固定 */
+    text-align: center;
+  }
+  
+  /* セルのスタイリング */
+  .TimeTable th, .TimeTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    width: 16.66%; /* 6列の場合の幅（100% / 6） */
+    height: auto; /* 高さを内容に応じて調整 */
+    white-space: normal; /* テキストを折り返す */
+    overflow: hidden; /* はみ出た内容を隠す */
+    text-overflow: ellipsis; /* 省略記号を表示 */
+  }
+  
+  /* ヘッダーのスタイリング */
+  .TimeTable th {
+    background-color: #f4f4f4;
+    white-space: normal; /* テキストを折り返す */
+  }
+  
+  .TimeTable tr {
+    height: calc((100vh) / 8); /* 行数で高さを割る */
+    white-space: normal; /* テキストを折り返す */
+  }
+  /* レスポンシブデザイン */
+  @media (max-width: 600px) {
+    .TimeTable th, .TimeTable td {
+      padding: 4px;
+      font-size: 12px;
+      white-space: normal; /* テキストを折り返す */
+    }
+    .TimeTable tr {
+      height: calc((100vh) / 8); /* モバイルの高さに合わせる */
+    }
+  }
+  
+  .class-room {
+    color: #666; /* 色を少し暗めにする */
+  }

@@ -1,0 +1,105 @@
+/* Modal.css */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+  }
+  
+  .modal-content {
+    position: fixed;
+    background: white;
+    width: 300px;
+    height: auto;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    max-height: 500px; /* 適切な最大高さを設定 */
+    overflow-y: auto;   /* 縦方向のスクロールを可能にする */
+  }
+  
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  li:hover {
+    background-color: #ddd;
+  }
+  .modal-item {
+    margin-bottom: 8px; /* 各アイテムの下部のマージン */
+    padding: 8px;       /* 内部のパディング */
+    /* その他のスタイル設定 */
+  }
+  .modal-list-container {
+    max-height: 400px; /* 適切な最大高さに設定 */
+    overflow-y: auto;   /* 縦方向のスクロールを可能にする */
+    padding: 10px;      /* パディングを追加 */
+  }
+  .modal-list {
+    margin: 0;
+    padding: 0;
+    list-style: none; /* リストのスタイルをリセット */
+  }
+  .modal-list li {
+    padding: 8px; /* 各アイテムのパディング */
+    border-bottom: 1px solid #ddd; /* 区切り線 */
+    cursor: pointer; /* カーソルをポインタに変更 */
+  }
+  .modal-content .search-input {
+    box-sizing: border-box; /* パディングとボーダーを幅に含める */
+    width: 100%; /* コンテナの全幅を使用 */
+    padding: 8px 10px; /* 快適なタイピングのためのパディング */
+    margin: 10px 0; /* 上下のみにマージンを設定 */
+    border: 1px solid #ddd; /* ボーダーのスタイリング */
+    border-radius: 4px; /* 角を丸くする */
+    font-size: 16px; /* 読みやすいフォントサイズ */
+  }
+  
+  /* フォームにフォーカスがあるときのスタイル */
+  .modal-content .search-input:focus {
+    border-color: #4a90e2; /* フォーカス時のボーダーカラー */
+    outline: none; /* ブラウザのデフォルトアウトラインを無効化 */
+  }
+  .class-name {
+    font-size: 16px; /* 授業名のフォントサイズ */
+    font-weight: bold; /* 太字にする */
+  }
+  
+  .class-details {
+    font-size: 12px; /* 詳細のフォントサイズ（小さめ） */
+    color: #666; /* 色を少し暗めにする */
+  }
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
