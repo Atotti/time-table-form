@@ -10,9 +10,13 @@ import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 
 const TimeTableForm = () => {
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
     // 曜日のリスト
     const days = ['月曜日', '火曜日', '水曜日', '木曜日', '金曜日'];
 
@@ -163,6 +167,17 @@ const TimeTableForm = () => {
           console.error("Error saving class to IndexedDB:", error);
         }
       };
+      const handleAlertOpen = (message) => {
+        setAlertMessage(message);
+        setAlertOpen(true);
+      };
+      
+      const handleAlertClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setAlertOpen(false);
+      };
 
       const sendSchedule = async () => {
         // 学部学科とscheduleを結合して送信
@@ -180,9 +195,12 @@ const TimeTableForm = () => {
           });
           if (!response.ok) {
             throw new Error('Network response was not ok');
+          } else {
+            handleAlertOpen('時間割を送信しました！');
           }
         } catch (error) {
           console.error('Error sending schedule:', error);
+          handleAlertOpen('エラーが発生しました。');
         }
       };
 
@@ -251,6 +269,7 @@ const TimeTableForm = () => {
       };
 
   return (
+    <>
     <Container>
         <Box
       display="flex"
@@ -324,6 +343,12 @@ const TimeTableForm = () => {
         <Button  variant="contained" onClick={sendSchedule}>送信</Button>
         </Box>
     </Container>
+    <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleAlertClose}>
+    <Alert onClose={handleAlertClose} severity="success" sx={{ width: '100%' }}>
+      {alertMessage}
+    </Alert>
+  </Snackbar>
+    </>
   );
 };
 
