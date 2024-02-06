@@ -2,6 +2,7 @@
 // Modal.js
 import React, { useState, useEffect, useRef } from 'react';
 import TextField from '@mui/material/TextField';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Modal = ({ show, classes, onSelect, onClose, setFilter, filter }) => {
   // const [filter, setFilter] = useState(''); // フィルタリング用のテキストの状態 親コンポーネントで管理する
@@ -37,6 +38,11 @@ const Modal = ({ show, classes, onSelect, onClose, setFilter, filter }) => {
           value={filter}
           onChange={e => setFilter(e.target.value)}
           placeholder="授業を検索"
+          InputProps={{
+            startAdornment: ( // 虫眼鏡アイコンを追加
+              <SearchIcon />
+            ),
+          }}
           inputRef={inputRef} // input要素にrefを設定
         />
         <ul className="modal-list">
