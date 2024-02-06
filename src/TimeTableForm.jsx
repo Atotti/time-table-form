@@ -132,9 +132,9 @@ const TimeTableForm = () => {
         loadAndSetSchedule();
       }, []);*/
 
-      const deleteClass = async (classInfo) => {
+      const deleteClass = async (classId) => {
         // スケジュールからも削除
-        setSchedule(prevSchedule => prevSchedule.filter(c => c.id !== classInfo.id));
+        setSchedule(schedule => schedule.filter(c => c.lecture_id !== classId));
         // 全部消えるバグあり
       };
 

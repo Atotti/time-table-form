@@ -5,7 +5,7 @@ const ClassDetailsModal = ({ classInfo, onClose, onDelete }) => {
     if (!classInfo) return null;
 
     const handleDelete = () => {
-      onDelete(classInfo);
+      onDelete(classInfo.lecture_id);
       onClose();
     };
   
