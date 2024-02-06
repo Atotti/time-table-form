@@ -17,6 +17,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Link from '@mui/material/Link';
 
 const TimeTableForm = () => {
   const [alertOpen, setAlertOpen] = useState(false);
@@ -387,7 +388,9 @@ const TimeTableForm = () => {
         <DialogTitle id="alert-dialog-title">{"送信完了"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            時間割を送信しました！Thank you!
+            時間割を送信しました！Thank you!<br />
+            もしよければ、授業のクチコミも<Link href="https://ishiike.herokuapp.com/create-review/" target="_blank" rel="noopener noreferrer">こちら</Link>に投稿してください!<br />
+            先輩が投稿した授業のクチコミは<Link href="https://ishiike.herokuapp.com/review-list/" target="_blank" rel="noopener noreferrer">こちら</Link>から見ることが出来ます!
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -396,6 +399,11 @@ const TimeTableForm = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleAlertClose}>
+        <Alert onClose={handleAlertClose} severity="success" sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
       <Container maxWidth="lg">
         <Typography variant="body1" align="center">
         Copyright © Ishiike 2022 - 2024 / @f_tmu_ 新入生向けwiki 
