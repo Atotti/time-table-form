@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from './Modal'; // モーダルコンポーネントのインポート
 import ClassDetailsModal from './ClassDetailsModal'; // モーダルコンポーネントのインポート
+import TextFieldComponent from './TextFieldComponent';
 import './TimeTable.css';
 import './Modal.css';
 import './ClassDetailsModal.css';
@@ -19,7 +20,14 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Link from '@mui/material/Link';
 
+
 const TimeTableForm = () => {
+  const [textFieldValue, setTextFieldValue] = useState('');
+  // TextFieldComponentが変更されたときに呼び出される関数
+  const handleTextChange = (value) => {
+    setTextFieldValue(value);
+  };
+
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
     // 曜日のリスト
@@ -43,12 +51,12 @@ const TimeTableForm = () => {
     };
 
     const timeSlots = {
-      '1時間目': '08:50~ 10:20',
-      '2時間目': '10:30~ 12:00',
-      '3時間目': '13:00~ 14:30',
-      '4時間目': '14:40~ 16:10',
-      '5時間目': '16:20~ 17:50',
-      '6時間目': '18:00~ 19:30'
+      '1時間目': '',
+      '2時間目': '',
+      '3時間目': '',
+      '4時間目': '',
+      '5時間目': '',
+      '6時間目': ''
     };
 
     // 特定の曜日と時間帯に対応する授業を検索する関数
@@ -70,7 +78,7 @@ const TimeTableForm = () => {
       return (
         <div onClick={handleClassInfoClick}>
           <div className="class-name-timetable">{classInfo.name}</div>
-          <div className="class-room">{classInfo.building} {classInfo.room_id}</div>
+          {/*<div className="class-room">{classInfo.building} {classInfo.room_id}</div>*/}
         </div>
       );
     };
@@ -193,13 +201,13 @@ const TimeTableForm = () => {
       const handleDialogClose = () => {
         setOpenDialog(false);
       };
-    
 
       const sendSchedule = async () => {
         // 学部学科とscheduleを結合して送信
         const department = selectedGakka.label;
         const classes = schedule;
-        const data = {department, classes};
+        const free_msg = textFieldValue;
+        const data = {department, classes, free_msg};
         console.log("data: ", data);
         try {
           const response = await fetch('https://ishiike.herokuapp.com/timetable/schedules/create/', {
@@ -360,6 +368,7 @@ const TimeTableForm = () => {
             </tbody>
         </table>
         </div>
+        <TextFieldComponent onTextChange={handleTextChange}/>
         <Button
           variant="contained"
           size="large" // ボタンのサイズを大きく設定
