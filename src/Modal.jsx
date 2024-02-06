@@ -1,9 +1,18 @@
 // @ts-nocheck
 // Modal.js
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import TextField from '@mui/material/TextField';
 
 const Modal = ({ show, classes, onSelect, onClose, setFilter, filter }) => {
-  // const [filter, setFilter] = useState(''); // フィルタリング用のテキストの状態
+  // const [filter, setFilter] = useState(''); // フィルタリング用のテキストの状態 親コンポーネントで管理する
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    // モーダルが表示されたときにinput要素にフォーカスを当てる
+    if (show) {
+      inputRef.current.focus();
+    }
+  }, [show]);
 
   // フィルタリングされたクラスのリスト
   const filteredClasses = classes.filter(c => c.name.includes(filter));
@@ -22,12 +31,13 @@ const Modal = ({ show, classes, onSelect, onClose, setFilter, filter }) => {
     <div className="modal-overlay" onClick={handleClose}>
       <div className="modal-content" onClick={e => e.stopPropagation()}>
         <span className="close" onClick={handleClose}>&times;</span>
-        <input
+        <TextField
           type="text"
           className="search-input"
           value={filter}
           onChange={e => setFilter(e.target.value)}
           placeholder="授業を検索"
+          inputRef={inputRef} // input要素にrefを設定
         />
         <ul className="modal-list">
           {filteredClasses.map(c => (
