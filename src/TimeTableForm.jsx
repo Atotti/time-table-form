@@ -12,7 +12,11 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const TimeTableForm = () => {
   const [alertOpen, setAlertOpen] = useState(false);
@@ -179,6 +183,17 @@ const TimeTableForm = () => {
         setAlertOpen(false);
       };
 
+      // ダイアログ関連
+      const [openDialog, setOpenDialog] = useState(false);
+
+      const handleDialogOpen = () => {
+        setOpenDialog(true);
+      };
+      const handleDialogClose = () => {
+        setOpenDialog(false);
+      };
+    
+
       const sendSchedule = async () => {
         // 学部学科とscheduleを結合して送信
         const department = selectedGakka.label;
@@ -196,7 +211,7 @@ const TimeTableForm = () => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
           } else {
-            handleAlertOpen('時間割を送信しました！');
+            handleDialogOpen();
           }
         } catch (error) {
           console.error('Error sending schedule:', error);
@@ -282,6 +297,10 @@ const TimeTableForm = () => {
             時間割投稿フォーム
         </Typography>
         <Typography variant='body1' component='p' my={2}>
+            このフォームは1年前期の時間割を投稿し、新入生に履修登録の参考にしてもらうためのものです。
+            投稿は匿名で行われ、新入生向けサイトに掲載されます。ご協力をお願いします。
+        </Typography>
+        <Typography variant='body1' component='p' my={2}>
             あなたの学部・学科を選択してください
         </Typography>
 
@@ -340,14 +359,49 @@ const TimeTableForm = () => {
             </tbody>
         </table>
         </div>
-        <Button  variant="contained" onClick={sendSchedule}>送信</Button>
+        <Button
+          variant="contained"
+          size="large" // ボタンのサイズを大きく設定
+          onClick={sendSchedule}
+          sx={{
+            m: 2, // すべての方向にマージンを適用
+          }}
+        >
+          送信
+        </Button>
         </Box>
     </Container>
-    <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleAlertClose}>
-    <Alert onClose={handleAlertClose} severity="success" sx={{ width: '100%' }}>
-      {alertMessage}
-    </Alert>
-  </Snackbar>
+  <Box
+      sx={{
+        bgcolor: 'primary.main',
+        color: 'white',
+        py: 2 // padding top and bottom
+      }}
+    >
+      <Dialog
+        open={openDialog}
+        onClose={handleDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"送信完了"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            時間割を送信しました！Thank you!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="primary" autoFocus>
+            閉じる
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Container maxWidth="lg">
+        <Typography variant="body1" align="center">
+        Copyright © Ishiike 2022 - 2024 / @f_tmu_ 新入生向けwiki 
+        </Typography>
+      </Container>
+    </Box>
     </>
   );
 };
