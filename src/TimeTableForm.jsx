@@ -135,7 +135,7 @@ const TimeTableForm = () => {
       const deleteClass = async (classId) => {
         // スケジュールからも削除
         setSchedule(schedule => schedule.filter(c => c.lecture_id !== classId));
-        // 全部消えるバグあり
+        
       };
 
     const [modalShow, setModalShow] = useState(false);
