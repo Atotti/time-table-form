@@ -2,8 +2,8 @@
 // Modal.js
 import React, { useState } from 'react';
 
-const Modal = ({ show, classes, onSelect, onClose }) => {
-  const [filter, setFilter] = useState(''); // フィルタリング用のテキストの状態
+const Modal = ({ show, classes, onSelect, onClose, setFilter, filter }) => {
+  // const [filter, setFilter] = useState(''); // フィルタリング用のテキストの状態
 
   // フィルタリングされたクラスのリスト
   const filteredClasses = classes.filter(c => c.name.includes(filter));
@@ -12,10 +12,16 @@ const Modal = ({ show, classes, onSelect, onClose }) => {
     return null;
   }
 
+  // モーダルを閉じるためのカスタム関数
+  const handleClose = () => {
+    setFilter(''); // フィルターをリセット
+    onClose(); // 親コンポーネントから渡されたonClose関数を呼び出す
+  };
+
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay" onClick={handleClose}>
       <div className="modal-content" onClick={e => e.stopPropagation()}>
-        <span className="close" onClick={onClose}>&times;</span>
+        <span className="close" onClick={handleClose}>&times;</span>
         <input
           type="text"
           className="search-input"

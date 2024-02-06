@@ -139,11 +139,13 @@ const TimeTableForm = () => {
       };
 
     const [modalShow, setModalShow] = useState(false);
+    const [filter, setFilter] = useState(''); // 授業のフィルタリング用のテキストの状態
     const [currentClasses, setCurrentClasses] = useState([]);
   
     const handleClassSelect = async (classInfo) => {
         // モーダルを閉じる
         setModalShow(false);
+        setFilter(''); // フィルターをリセット
       
         // classInfo の内容を確認（デバッグ用）
         console.log("Selected Class: ", classInfo);
@@ -346,6 +348,8 @@ const TimeTableForm = () => {
             classes={currentClasses}
             onSelect={handleClassSelect}
             onClose={() => setModalShow(false)}
+            setFilter={setFilter}
+            filter={filter}
         />
         <table>
             <thead>
