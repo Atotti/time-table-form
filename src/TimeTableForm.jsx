@@ -223,6 +223,7 @@ const TimeTableForm = () => {
             throw new Error('Network response was not ok');
           } else {
             handleDialogOpen();
+            setSchedule(schedule => []);
           }
         } catch (error) {
           console.error('Error sending schedule:', error);
