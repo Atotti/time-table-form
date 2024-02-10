@@ -65,7 +65,7 @@ const TimeTableForm = () => {
         return '';
       }
 
-      const classInfo = schedule.find(c => c.day === day && c.period === period && c.season === term);
+      const classInfo = schedule.find(c => c.day === day && c.period === period && ( c.season === term || c.season === "通年") );
       if (!classInfo) {
         return '';
       }
@@ -104,7 +104,7 @@ const TimeTableForm = () => {
         
           const classesForDayAndPeriod = await fetchClassesForDayAndPeriod(dayNumber, periodNumber);
           console.log("classesForDayAndPeriod: ", classesForDayAndPeriod);
-          setCurrentClasses(classesForDayAndPeriod.filter(c => c.season === term));
+          setCurrentClasses(classesForDayAndPeriod.filter(c => c.season === term || c.season === "通年"));
           setModalShow(true);
         }
       };
