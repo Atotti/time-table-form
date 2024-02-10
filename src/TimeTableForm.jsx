@@ -202,7 +202,7 @@ const TimeTableForm = () => {
         setOpenDialog(true);
       };
       const handleDialogClose = () => {
-        setOpenDialog(false);
+        window.location.href = 'https://ishiike.herokuapp.com/review-list/';
       };
 
       const sendSchedule = async () => {
