@@ -60,12 +60,12 @@ const TimeTableForm = () => {
     };
 
     // 特定の曜日と時間帯に対応する授業を検索する関数
-    const renderSchedule = (day, period) => {
+    const renderSchedule = (day, period, term) => {
       if (!Array.isArray(schedule)) {
         return '';
       }
-    
-      const classInfo = schedule.find(c => c.day === day && c.period === period);
+
+      const classInfo = schedule.find(c => c.day === day && c.period === period && c.season === term);
       if (!classInfo) {
         return '';
       }
@@ -94,7 +94,7 @@ const TimeTableForm = () => {
       setSelectedClass(null);
     };
 
-    const handleCellClick = async (day, period, classInfo) => {
+    const handleCellClick = async (day, period, classInfo, term) => {
         if (classInfo) {
           // 授業の詳細情報を表示するロジック
           showClassDetails(classInfo);
@@ -103,7 +103,8 @@ const TimeTableForm = () => {
           const periodNumber = periodMapping[period];
         
           const classesForDayAndPeriod = await fetchClassesForDayAndPeriod(dayNumber, periodNumber);
-          setCurrentClasses(classesForDayAndPeriod);
+          console.log("classesForDayAndPeriod: ", classesForDayAndPeriod);
+          setCurrentClasses(classesForDayAndPeriod.filter(c => c.season === term));
           setModalShow(true);
         }
       };
@@ -141,7 +142,7 @@ const TimeTableForm = () => {
     const [modalShow, setModalShow] = useState(false);
     const [filter, setFilter] = useState(''); // 授業のフィルタリング用のテキストの状態
     const [currentClasses, setCurrentClasses] = useState([]);
-  
+      
     const handleClassSelect = async (classInfo) => {
         // モーダルを閉じる
         setModalShow(false);
@@ -179,14 +180,14 @@ const TimeTableForm = () => {
 
           console.log("schedule1: ", schedule);
         } catch (error) {
-          console.error("Error saving class to IndexedDB:", error);
+          console.error("Error saving class ", error);
         }
       };
       const handleAlertOpen = (message) => {
         setAlertMessage(message);
         setAlertOpen(true);
       };
-      
+
       const handleAlertClose = (event, reason) => {
         if (reason === 'clickaway') {
           return;
@@ -334,11 +335,8 @@ const TimeTableForm = () => {
         disabled={!selectedGakubu}
         onChange={handleGakkaChange}
       />
-      <Typography variant='body1' component='p' my={2}>
-            1年前期の時間割を入力してください
-        </Typography>
-
         <div className="TimeTable">
+        
         <ClassDetailsModal
             classInfo={selectedClass}
             onClose={closeClassDetails}
@@ -352,6 +350,9 @@ const TimeTableForm = () => {
             setFilter={setFilter}
             filter={filter}
         />
+        <Typography variant='body1' component='p' my={2}>
+            1年前期の時間割を入力してください
+        </Typography>
         <table>
             <thead>
             <tr>
@@ -364,8 +365,47 @@ const TimeTableForm = () => {
                 <tr key={period}>
                     <td>{`${period} ${time}`}</td>
                 {days.map(day => (
-                    <td key={day} onClick={() => handleCellClick(day, period)}>
-                    {renderSchedule(day, period)}
+                    <td key={day} onClick={() => handleCellClick(day, period, undefined, "前期")}>
+                    {renderSchedule(day, period, "前期")}
+                    </td>
+                ))}
+                </tr>
+            ))}
+            </tbody>
+        </table>
+        </div>
+        <div className="TimeTable">
+        
+        <ClassDetailsModal
+            classInfo={selectedClass}
+            onClose={closeClassDetails}
+            onDelete={deleteClass}
+        />
+        <Modal
+            show={modalShow}
+            classes={currentClasses}
+            onSelect={handleClassSelect}
+            onClose={() => setModalShow(false)}
+            setFilter={setFilter}
+            filter={filter}
+        />
+        <Typography variant='body1' component='p' my={2}>
+            1年後期の時間割を入力してください
+        </Typography>
+        <table>
+            <thead>
+            <tr>
+                <th>時間\曜日</th>
+                {days.map(day => <th key={day}>{day}</th>)}
+            </tr>
+            </thead>
+            <tbody>
+            {Object.entries(timeSlots).map(([period, time]) => (
+                <tr key={period}>
+                    <td>{`${period} ${time}`}</td>
+                {days.map(day => (
+                    <td key={day} onClick={() => handleCellClick(day, period, undefined, "後期")}>
+                    {renderSchedule(day, period, "後期")}
                     </td>
                 ))}
                 </tr>

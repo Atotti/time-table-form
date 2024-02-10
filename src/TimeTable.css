@@ -1,10 +1,5 @@
 /* 基本のスタイリング */
-.TimeTable {
-    margin: 0 auto;
-    max-height: 100vh; /* 高さがビューポートを超えないようにする */
-    overflow: auto; /* 必要に応じてスクロールを可能にする */
-    height: calc(100vh); /* ヘッダーや余白を考慮した高さ */
-  }
+
   
   .TimeTable table {
     width: 100%; /* 表の幅を親要素に合わせる */
