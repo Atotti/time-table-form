@@ -310,7 +310,7 @@ const TimeTableForm = () => {
             時間割投稿フォーム
         </Typography>
         <Typography variant='body1' component='p' my={2}>
-            このフォームは1年前期の時間割を投稿し、新入生に履修登録の参考にしてもらうためのものです。
+            このフォームは1年の時間割を投稿し、新入生に履修登録の参考にしてもらうためのものです。
             投稿は匿名で行われ、新入生向けサイトに掲載されます。ご協力をお願いします。
         </Typography>
         <Typography variant='body1' component='p' my={2}>
